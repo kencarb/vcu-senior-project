@@ -1,0 +1,12 @@
+body {
+    background: white url("images/hort.gif") no-repeat right top;
+}
+
+td {
+    padding: 2;
+	vertical-align: top;
+}
+
+tr:nth-child(odd) {
+    background-color: hsl(120, 80%, 90%);
+}

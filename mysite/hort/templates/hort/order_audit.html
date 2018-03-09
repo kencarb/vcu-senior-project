@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Orders Audit Report</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="goBack()">Back</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if audit_info %}
+ 	<table border="1" style="width:100%">
+	<tr>
+		<td><b>OID</b></td>
+		<td><b>Status</b></td>
+		<td><b>DID</b></td>
+		<td><b>AcctgDate</b></td>
+		<td><b>CustId</b></td>
+		<td><b>LastName</b></td>
+		<td><b>GSID</b></td>
+		<td><b>Description</b></td>
+		<td align="right"><b>CPEach</b></td>
+		<td align="right"><b>QtyIO</b></td>
+		<td align="right"><b>Extd</b></td>
+		<td align="center"><b>Ledger</b></td>
+	</tr>
+    {% for audit_row in audit_info %}
+        <tr>
+		    <td>{{ audit_row.OID }}</td>
+			<td>{{ audit_row.Status }}</td>
+			<td>{{ audit_row.DID }}</td>
+			<td>{{ audit_row.AcctgDate }}</td>
+			<td>{{ audit_row.CustId }}</td>
+			<td>{{ audit_row.LastName }}</td>
+			<td>{{ audit_row.GSID }}</td>
+			<td>{{ audit_row.Description }}</td>
+			<td align="right">{{ audit_row.CPEach }}</td>
+			<td align="right">{{ audit_row.QtyIO }}</td>
+			<td align="right">{{ audit_row.Extd }}</td>
+			<td align="center">{{ audit_row.Ledger }}</td>
+		</tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No Audit Details are available for date chosen.</p>
+{% endif %}
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

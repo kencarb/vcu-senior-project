@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Journal Report (fulfilled orders)</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="goBack()">Back</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if journal_rpt %}
+    <pre>{{ journal_rpt }}</pre>
+{% else %}
+    <h4>No fullfilled orders available.</h4>
+{% endif %}
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

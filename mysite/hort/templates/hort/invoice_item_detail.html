@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery-1.12.0.min.js' %}"></script>
+    {{ form.media }}
+</head>
+<br>
+<h1>Add/Update Item</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<!-- <button type="button" onclick="location.href='/hort/invoice_item_list/'{{ form.OrderID }}'/'">Back to Item Entry (cancel)</button> -->
+<button type="button" onclick="goBack()">Cancel</button>
+</div>
+
+<body style="margin:10px;" onload="Hide()">
+<br>
+<p style="font-size:16px"><b>NOTE: Choose AcctEntry=Yes to enter ad hoc CPEach - otherwise the system will lookup Good/Svcs</b></p>
+
+<form action="item_update/" method="post">
+<table>
+    {% csrf_token %}
+    {{ form }}
+</table>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Submit" />
+</form>
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+function Hide()
+{
+    if(document.getElementById('id_AcctEntry').options[document.getElementById('id_AcctEntry').selectedIndex].value == "0")
+    {
+         document.getElementById('id_CPEach').style.display = 'none';
+    }else
+    {
+         document.getElementById('id_CPEach').style.display = '';
+    }
+}
+</script>

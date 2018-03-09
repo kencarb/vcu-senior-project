@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Goods and Services Detail</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="location.href='/hort/gs_list/'">Cancel</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+<form action="gs_update/" method="post">
+<table>
+    {% csrf_token %}
+    {{ form }}
+</table>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Submit" />
+</form>
+</body>

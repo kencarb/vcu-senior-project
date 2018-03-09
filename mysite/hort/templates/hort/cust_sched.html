@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>My Schedule (open orders)</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="goBack()">Back</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if cust_sched %}
+    <pre>{{ cust_sched }}</pre>
+	<br>
+	<h4>Please reference Order# when requesting a Svcs Date change.</h4>
+{% else %}
+    <h4>No open orders available:  please go back and Request Services.</h4>
+{% endif %}
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

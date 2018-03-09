@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Goods & Services List</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="location.href='/hort/gs_detail/0/'">Add Good/Service</button>
+<!--<button type="button" onclick="alert('Hello World!')">Say Hello</button>-->
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if gs_list %}
+ 	<table border="1" style="width:100%">
+	<tr>
+		<td><b>Description</b> <i>(click to update)</i></td>
+		<td><b>Class</b></td>
+		<td><b>LedgerIn</b></td>
+		<td><b>Cost</b></td>
+		<td><b>LedgerOut</b></td>
+		<td><b>Price</b></td>
+		<td><b>PrimarySupplier</b></td>
+		<td><b>PrimarySupplierPartNo</b></td>
+	</tr>
+    {% for gs_item in gs_list %}
+        <tr>
+		    <td><a href="/hort/gs_detail/{{ gs_item.id }}/">{{ gs_item.Description }}</a></td>
+		    <td>{{ gs_item.Class }}</td>
+			<td>{{ gs_item.LedgerIn }}</td>
+			<td>{{ gs_item.Cost }}</td>
+			<td>{{ gs_item.LedgerOut }}</td>
+			<td>{{ gs_item.Price }}</td>
+			<td>{{ gs_item.PrimarySupplier }}</td>
+			<td>{{ gs_item.PrimarySupplierPartNo }}</td>
+	    </tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No goods or services are available.</p>
+{% endif %}
+</body>

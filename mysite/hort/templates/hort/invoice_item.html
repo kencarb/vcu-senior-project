@@ -1,0 +1,128 @@
+{% load staticfiles %}
+<head>
+    <style>
+    em { 
+        font-style: italic;
+		font-size: 150%;
+        color: red;
+        margin-left: 5em;
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery-1.12.0.min.js' %}"></script>
+    {{ form.media }}
+</head>
+<br>
+{% if order_info.Status|stringformat:"s" == "OP" %}
+<h1>Order Items Entry</h1>
+{% else %}
+<h1>Fulfilled Order Items</h1>
+{% endif %}
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+{% if order_info.Status|stringformat:"s" == "OP" %}
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="location.href='/hort/invoice_item/{{ order_info.id }}/0/'">Add Line Item</button>
+<button type="button" onclick="location.href='/hort/invoice/'">Save For Later</button>
+<button type="button" onclick="goBack()">Cancel</button>
+{% else %}
+<button type="button" onclick="location.href='/hort/ff_invoice/'">Done</button>
+{% endif %}
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if order_info %}
+<h4 style="font-size:20px"><b>Order Header:<em>{% if order_info.Type|stringformat:"s" == "P" %}<u>P</u>urchase Order{% else %}<u>S</u>ale to Customer{% endif %}</em></b></h4>
+    <table border="0" style="width:100%">
+	<tr>
+		<td><b>OrdersCustID</b></td>
+		<td><b>PONumber</b></td>
+		<td><b>OrderID</b></td>
+		<td><b>Status</b></td>
+		<td><b>OrderNotes</b></td>
+		<td><b>StatusDT</b></td>
+		<td><b>EnteredDT</b></td>
+		<td><b>InOrOut</b></td>
+	</tr>
+    <tr>
+        <td>{{ order_info.OrdersCustID }}</td>
+		<td>{{ order_info.PONumber }}</td>
+		<td>{{ order_info.id }}</td>
+		<td>{{ order_info.Status }}</td>
+		<td>{{ order_info.OrderNotes }}</td>
+		<td>{{ order_info.StatusDT }}</td>
+		<td>{{ order_info.EnteredDT }}</td>
+		<td>{{ order_info.InOrOut }}</td>
+	</tr>
+ 	</table>
+<h4 style="font-size:20px"><b>Customer Info:</b></h4>
+    <table border="0" style="width:100%">
+	<tr>
+		<td><b>Name</b></td>
+		<td><b>Address</b></td>
+		<td><b>ExtraLine</b></td>
+		<td><b>Relationship</b></td>
+	</tr>
+    <tr>
+	    <td>{{ cust_info.LastName }}{% if cust_info.FirstName %}, {{ cust_info.FirstName }}{% endif %}</td>
+		<td>{{ cust_info.StreetAddress }}, {{ cust_info.PostOffice }} {{ cust_info.ZipCode }}</td>
+		<td>{{ cust_info.ExtraLine }}</td>
+		<td>{{ cust_info.Relationship }}</td>
+	</tr>
+ 	</table>
+<h4 style="font-size:20px"><b>Line Items:</b></h4>
+    {% if item_info %}
+    <table border="0" style="width:100%">
+	<tr>
+		<td><b>GSID</b> <i>(click to update)</i></td>
+		<td><b>QtyOrdered</b></td>
+		<td><b>CPEach</b></td>
+		<td><b>ExtPrice</b></td>
+		<td><b>Ledger</b></td>
+		<td><b>ScheduledStartDT</b></td>
+	</tr>
+	{% for item in item_info %}
+    <tr>
+	    <td><a href="/hort/invoice_item/{{ order_info.id }}/{{ item.id }}/">{{ item.GSID }}</a></td>
+		<td>{{ item.QtyOrdered }}</td>
+		<td>{{ item.CPEach }}</td>
+		<td>{{ item.ExtPrice }}</td>
+		<td>{{ item.Ledger }}</td>
+		<td>{{ item.ScheduledStartDT }}</td>
+	</tr>
+	{% endfor %}
+ 	</table>
+	</br>
+      {% if order_info.Status|stringformat:"s" == "OP" %}	
+	<h4 style="font-size:20px"><b>Ext Total: &nbsp;&nbsp;&nbsp;&nbsp;${{ item_total.item_sum }}
+	&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" onclick="location.href='/hort/tender/{{ order_info.id }}/{{ order_info.InOrOut }}/{{ item_total.item_sum }}/'">Tender Order</button>
+	</b></h4>
+	  {% endif %}
+	{% else %}
+      <p>No Items are available.</p>
+    {% endif %}
+{% else %}
+  <p>No Orders are available.</p>
+{% endif %}
+<!--
+<form action="inv_update/" method="post">
+<table>
+
+    {% csrf_token %}
+    {{ form }}
+
+</table>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Submit" />
+</form>
+ -->
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Ledger Account List</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="alert('That feature will cost extra.')">New Account</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if ledger_acct_list %}
+ 	<table border="1" style="width:50%">
+	<tr><td><b>LedgerAcctNum</b> <i>(Click for Detail)</i></td><td><b>LedgerAcctTxt</b></td>
+    {% for ledger_acct in ledger_acct_list %}
+        <tr>
+		    <td><a href="/hort/ledger_detail/{{ ledger_acct.LedgerAcctNum }}/">{{ ledger_acct.LedgerAcctNum }}</a></td>
+		    <td>{{ ledger_acct.LedgerAcctTxt }}</td>
+	    </tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No ledger accounts are available.</p>
+{% endif %}
+</body>

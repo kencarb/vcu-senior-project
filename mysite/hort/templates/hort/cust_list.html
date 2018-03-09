@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Customer List</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="location.href='/hort/cust_detail/0/'">Add Cust (manual)</button>
+<button type="button" onclick="alert('TBD (To be determined!)')">Load Cust (file)</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if customer_list %}
+ 	<table border="1" style="width:100%">
+	<tr>
+		<td><b>CustID</b> <i>(click to update)</i></td>
+		<td><b>LastName, FirstName</b></td>
+		<td><b>StreetAddress</b></td>
+		<td><b>ExtraLine</b></td>
+		<td><b>PostOffice</b></td>
+		<td><b>ZipCode</b></td>
+		<td><b>Relationship</b></td>
+	</tr>
+    {% for customer in customer_list %}
+        <tr>
+		    <td><a href="/hort/cust_detail/{{ customer.id }}/">{{ customer.CustID }}</a></td>
+		    <td>{{ customer.LastName }}{% if customer.FirstName %}, {{ customer.FirstName }}{% endif %}</td>
+			<td>{{ customer.StreetAddress }}</td>
+			<td>{{ customer.ExtraLine }}</td>
+			<td>{{ customer.PostOffice }}</td>
+			<td>{{ customer.ZipCode }}</td>
+			<td>{{ customer.Relationship }}</td>
+	    </tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No customers are available.</p>
+{% endif %}
+</body>

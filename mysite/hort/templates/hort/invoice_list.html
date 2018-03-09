@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Open Orders</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="location.href='/hort/invoice_detail/0/'">New Order</button>
+<!--<button type="button" onclick="alert('Hello World!')">Say Hello</button>-->
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if invoice_list %}
+ 	<table border="1" style="width:100%">
+	<tr>
+		<td><b>Order Header</b> <i>(click to update)</i></td>
+		<td><b>Type</b></td>
+		<td align="center"><b>Edit/Tender</b></td>
+		<td><b>Status</b></td>
+		<td><b>OrderNotes</b></td>
+		<td><b>StatusDT</b></td>
+		<td><b>EnteredDT</b></td>
+		<td align="center"><b>InOrOut</b></td>
+		<!--<td align="center"><b>Tender</b></td>-->
+	</tr>
+    {% for inv_item in invoice_list %}
+        <tr>
+		    <td><a href="/hort/invoice_detail/{{ inv_item.id }}/">{{ inv_item.id }} / {{ inv_item.OrdersCustID }} {% if inv_item.PONumber|stringformat:"s" == "" %}{% else %}[PO#{{ inv_item.PONumber }}]{% endif %}</a></td>
+			<td>{{ inv_item.Type }}</td>
+			<td align="center"><button type="button" onclick="location.href='/hort/invoice_item_list/{{ inv_item.id }}/'" style="height:18px;width:24px;"><b>></b></button></td>
+			<td>{{ inv_item.Status }}</td>
+			<td>{{ inv_item.OrderNotes }}</td>
+			<td>{{ inv_item.StatusDT }}</td>
+			<td>{{ inv_item.EnteredDT }}</td>
+			<td align="center">{{ inv_item.InOrOut }}</td>
+			<!--<td align="center"><button type="button" onclick="alert('Under construction...')" style="height:18px;width:24px;"><b>$</b></button></td>-->
+	    </tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No Orders are available.</p>
+{% endif %}
+</body>

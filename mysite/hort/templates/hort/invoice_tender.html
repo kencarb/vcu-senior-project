@@ -1,0 +1,88 @@
+{% load staticfiles %}
+<head>
+    <style>
+    em { 
+        font-style: italic;
+		font-size: 100%;
+        color: red;
+        margin-left: 5em;
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery-1.12.0.min.js' %}"></script>
+    {{ form.media }}
+</head>
+<br>
+<h1>Order Tender</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<!-- <button type="button" onclick="location.href='/hort/invoice_item_list/'{{ form.OrderID }}'/'">Back to Item Entry (cancel)</button> -->
+<button type="button" onclick="goBack()">Cancel</button>
+</div>
+
+<body style="margin:10px;" onload="Hide()">
+<br>
+<p style="font-size:16px"><b>Create a counter balancing detail entry for the order:
+<ul>
+  <li>Status is set to FF (fullfilled)</li>
+  <li>DR or CR entry (opposite of Order)</li>
+  <li>CPEach = order item(s) Extended total</li>
+  <li>GSID is typically Cash or another [Acct] class</li>
+</ul></b></p>
+<br>
+<h4 style="font-size:20px"><b>Order Info:<em>{% if order_info.Type|stringformat:"s" == "P" %}<u>P</u>urchase Order{% else %}<u>S</u>ale to Customer{% endif %}</em></b></h4>
+    <table border="0" style="width:100%">
+	<tr>
+		<td><b>OrdersCustID</b></td>
+		<td><b>PONumber</b></td>
+		<td><b>OrderID</b></td>
+		<td><b>Status</b></td>
+		<td><b>DR/CR</b></td>
+		<td><b>StatusDT</b></td>
+		<td><b>EnteredDT</b></td>
+		<td><b>OrderNotes</b></td>
+	</tr>
+    <tr>
+        <td>{{ order_info.OrdersCustID }}</td>
+		<td>{{ order_info.PONumber }}</td>
+		<td>{{ order_info.id }}</td>
+		<td>{{ order_info.Status }}</td>
+		<td>{% if order_info.InOrOut|stringformat:"s" == "1" %}<b>DR</b>{% else %}<b>CR</b>{% endif %}</td>
+		<td>{{ order_info.StatusDT }}</td>
+		<td>{{ order_info.EnteredDT }}</td>
+		<td>{{ order_info.OrderNotes }}</td>
+	</tr>
+ 	</table>
+<br>
+<h4 style="font-size:20px"><b>Final Balance Entry:<em>{% if order_info.InOrOut|stringformat:"s" == "1" %}CR{% else %}DR{% endif %}</em></b></h4>
+<form action="final_entry/" method="post">
+<table>
+    {% csrf_token %}
+    {{ form }}
+</table>
+<br>
+<button type="button" onclick="goBack()">Cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;<b><input type="submit" value="Submit" /></b>
+</form>
+<br>
+<p style="font-size:16px"><b>Only submit if CPEach (the order total) and Order Info are correct</b></p>
+<p style="font-size:16px"><b>... otherwise, Cancel and adjust the Order or Line Items</b></p>
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+function Hide()
+{
+    if(document.getElementById('id_AcctEntry').options[document.getElementById('id_AcctEntry').selectedIndex].value == "0")
+    {
+         document.getElementById('id_CPEach').style.display = 'none';
+    }else
+    {
+         document.getElementById('id_CPEach').style.display = '';
+    }
+}
+</script>

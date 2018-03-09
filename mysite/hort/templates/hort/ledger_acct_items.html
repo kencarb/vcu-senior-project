@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>Ledger Account Details</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Home</button>
+<button type="button" onclick="goBack()">Back</button>
+</div>
+
+<body style="margin:10px;">
+<br>
+{% if ledger_acct_items %}
+ 	<table border="1" style="width:100%">
+	<tr>
+		<td><b>OrderID</b></td>
+		<td><b>GSID</b></td>
+		<td><b>QtyInOrOut</b></td>
+		<td><b>CPEach</b></td>
+		<td><b>ExtPrice</b></td>
+		<td><b>Ledger</b></td>
+	</tr>
+    {% for acct_item in ledger_acct_items %}
+        <tr>
+		    <td>{{ acct_item.OrderID }}</td>
+			<td>{{ acct_item.GSID }}</td>
+			<td>{{ acct_item.QtyInOrOut }}</td>
+			<td>{{ acct_item.CPEach }}</td>
+			<td>{{ acct_item.ExtPrice }}</td>
+			<td>{{ acct_item.Ledger }}</td>
+		</tr>
+    {% endfor %}
+	</table>
+{% else %}
+    <p>No Details are available.</p>
+{% endif %}
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

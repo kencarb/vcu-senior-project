@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<header>
+<br>
+<h1>Home - Welcome {{ name.FirstName }}!</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/account/logout/?next=/hort/login/'">Logout</button>
+<i style="font-size:18px; float:right;">User: {{ name.FirstName }} {{ name.LastName }}</i>
+</div>
+</header>
+
+<body style="margin:10px;">
+<br>
+
+{% if rel_menu.Relationship|stringformat:"s" == "CUS" %}
+  <h2>Customer Menu</h2>
+  <ul style="font-size:20px">
+    <li><a href="/hort/my_service/{{ cust_id.id}}/ ">My Orders & Scheduled Time</a></li>
+    <li><a href="/hort/" onclick="alert('Place email process here: carbaughkr@vcu.edu')">Request Services</a></li>
+  </ul>
+{% endif %}
+{% if rel_menu.Relationship|stringformat:"s" == "EMP" %}
+  <h2>Crew Lead Menu</h2>
+  <ul style="font-size:20px">
+    <li><a href="/hort/invoice/">Customer Order Entry</a></li>
+    <li><a href="/hort/open_order_sched/">Orders & Scheduled Time</a></li>
+    <!--<li><a href="/hort/" onclick="alert('Hello World!')">Say Hello</a></li>-->
+  </ul>
+{% endif %}
+{% if rel_menu.Relationship|stringformat:"s" == "OWN" %}
+  <h2>Manager Menu</h2>
+  <ul style="font-size:20px">
+    <li><a href="/hort/invoice/">Open Orders / Order Entry</a></li>
+    <li><a href="/hort/cust_list/">Customers and Employees</a></li>
+    <li><a href="/hort/gs_list/">Goods and Services</a></li>
+    <li><a href="/hort/ff_invoice/">Fulfilled Orders / Trial Balance</a></li>
+	<li><a href="/hort/order_audit/">Orders Audit Report</a></li>
+    <li><a href="/hort/ledger/">Ledger Accounts</a></li>
+  </ul>
+{% endif %}
+
+</body>
+
+<br><br><br><br><br><br><br><br>
+
+<footer vertical-align="bottom">
+<div align="center">
+  <em>INFO 465 IS Project - Ken Carbaugh</em>
+  <br>
+  <em>Spring 2016, evening section</em>
+  <br>
+  <em>Contact: <a href="mailto:carbaughkr@vcu.edu">carbaughkr@vcu.edu</a></em>
+</div>
+</footer>

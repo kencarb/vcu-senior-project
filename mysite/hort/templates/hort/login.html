@@ -1,0 +1,10 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'hort/style.css' %}" />
+<br>
+<h1>You are not logged in...</h1>
+
+<div style="background-color:lightgreen; color:black; padding:10px;">
+<button type="button" onclick="location.href='/hort/'">Login</button>
+<button type="button" onclick="location.href='/admin/'" style="float: right;">Site Admin</button>
+</div>
