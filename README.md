@@ -11,3 +11,5 @@ Considerations:
 * The "project" is code and test data only
 * For development, [Setup a virtualenv for Python 3 on Windows](http://timmyreilly.azurewebsites.net/setup-a-virtualenv-for-python-3-on-windows/)
 * For data, [SQLite](https://www.sqlite.org/index.html) was sufficient
+
+Please see [https://www.linkedin.com/in/kencarbaugh/](https://www.linkedin.com/in/kencarbaugh/)
