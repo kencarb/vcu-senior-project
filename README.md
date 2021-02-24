@@ -1,5 +1,5 @@
 # Ken Carbaugh
-## VCU Senior Project in Business Information Systems
+## VCU Senior Project in Business Information Systems [Spring 2016]
 
 The professor for this class encouraged everyone to code the project using MS Visual Basic since he was familiar with it. However, I chose to code using Python and Django. This was an interesting project made even more interesting by the fact that I was the only student who went off book on the development language.
 
